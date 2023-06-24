@@ -8,7 +8,7 @@ public class AvaliadorExprecoes {
 
     public static void main(String[] args) {
         
-        String exp;
+        String exp, pos;
         
         while (true) {
             System.out.println("\nDigite 0 para encerrar o programa\nEntre com a expreção: ");
@@ -17,7 +17,10 @@ public class AvaliadorExprecoes {
             
             if(exp.equals("0")) break;
             
-            calculadora(avaliador(exp));
+            pos = avaliador(exp);
+            System.out.println("A expreção infixa: " + exp + "\nResulta na expreção pós fixa:"
+                    + pos + "\nTendo como resultado da expreção: "
+                    + calculadora(pos));
         }
     }
     
