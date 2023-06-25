@@ -9,7 +9,7 @@ public class AvaliadorExprecoes {
     public static void main(String[] args) {
         
         String exp, pos;
-        LDEDS<String> lista = new LDEDS<String>();
+        Lista<String> lista = new Lista<String>();
         
         while (true) {
             System.out.println("\nDigite 0 para encerrar o programa\nEntre com a expreção: ");
