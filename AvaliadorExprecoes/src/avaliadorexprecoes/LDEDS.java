@@ -23,7 +23,19 @@ public class LDEDS<T> {
         head.prox = tail;
         tail.ant = head;
     }
+    
+    //add inicio
+    void addi(T item) {
+        Celula novo = new Celula(item);
+        novo.ant = head;
+        novo.prox = head.prox;
+        head.prox = novo;
+        novo.prox.ant = novo;
+        size++;
 
+    }
+
+    //add fim
     void add(T item) {
         Celula novo = new Celula(item);
         novo.ant = tail.ant;
@@ -61,7 +73,7 @@ public class LDEDS<T> {
             Celula aux = head.prox;
             long j = 0;
 
-            while (aux.prox != null && j < i) {
+            while (aux != null && j < i) {
                 aux = aux.prox;
                 j++;
             }
