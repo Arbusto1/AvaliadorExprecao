@@ -93,15 +93,13 @@ public class Lista<T> {
     }
 
     public String toString() {
-        StringBuilder sb = new StringBuilder("[ ");
+        StringBuilder sb = new StringBuilder();
         Celula aux = head.prox;
 
         while (aux != tail) {
             sb.append(aux.item);
-            sb.append(" ");
             aux = aux.prox;
         }
-        sb.append("]");
         return sb.toString();
 
     }
