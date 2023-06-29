@@ -22,6 +22,7 @@ public class Lista<T> {
         tail = new Celula(null);
         head.prox = tail;
         tail.ant = head;
+        size = 0;
     }
     
     //add inicio
@@ -64,6 +65,17 @@ public class Lista<T> {
             }
         }
 
+    }
+    
+    //exclui no final
+    public T excluir() {
+        if (head.prox == tail) throw new IllegalArgumentException("Lista vazia");
+        
+        Celula aux = tail.ant;
+        tail.ant.ant.prox = tail;
+        tail.ant = tail.ant.ant;
+        size--;
+        return aux.item;
     }
 
     public T get(long i) {

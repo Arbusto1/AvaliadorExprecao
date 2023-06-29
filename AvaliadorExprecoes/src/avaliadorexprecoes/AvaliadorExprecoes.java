@@ -32,6 +32,10 @@ public class AvaliadorExprecoes {
             System.out.println("A expreção infixa: " + exp + "\nResulta na expreção pós fixa:"
                     + pos + "\nTendo como resultado da expreção: "
                     + calculadora(pos));
+            
+            while (lista.getSize() > 0) {
+                lista.excluir();
+            }
         }
     }
     
