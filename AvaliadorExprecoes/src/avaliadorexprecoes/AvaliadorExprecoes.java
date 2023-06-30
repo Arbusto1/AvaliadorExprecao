@@ -31,7 +31,7 @@ public class AvaliadorExprecoes {
             }
 
             System.out.println("A expreção infixa: \n" + exp + "\nResulta na expreção pós fixa:");
-            pos = conversao(exp);
+           conversao(exp);
 
             while (lista.getSize() > 0) {
                 lista.excluir();
@@ -113,7 +113,7 @@ public class AvaliadorExprecoes {
         return false;
     }
 
-    public static char conversao(String expr) {
+    public static Pilha conversao(String expr) {
         Pilha pilhaT = new Pilha();
         Pilha pilhaP = new Pilha();
         Pilha pilhaPrint = new Pilha();
@@ -318,7 +318,7 @@ public class AvaliadorExprecoes {
                 System.out.print(auxPrint);
             }
         }
-        return auxPrint;
+        return pilhaPrint;
 
     }
 
