@@ -5,12 +5,14 @@ import java.util.Scanner;
 public class AvaliadorExprecoes {
 
     public static Scanner sc = new Scanner(System.in);
+    
+    public static StringBuffer sb = new StringBuffer();
 
     public static void main(String[] args) {
         char pos;
         String exp;
         Lista<Character> lista = new Lista<>();
-        Pilha p;
+        PilhaSE p = new PilhaSE();
 
         while (true) {
             System.out.println("\nDigite 0 para encerrar o programa\nEntre com a expreção: ");
@@ -33,8 +35,8 @@ public class AvaliadorExprecoes {
             
 
             System.out.println("A expreção infixa: \n" + exp + "\nResulta na expreção pós fixa:");
-            p = conversao(exp);
-            System.out.println("\nQue tem como resultado: " + calculadora(p));
+            conversao(exp);
+            System.out.println("\nQue tem como resultado: " + calculadora(p, sb.toString()));
 
             while (lista.getSize() > 0) {
                 lista.excluir();
@@ -319,6 +321,7 @@ public class AvaliadorExprecoes {
 
             } else {
                 System.out.print(auxPrint);
+                sb.append(auxPrint);
             }
         }
         return pilhaPrint;
@@ -350,69 +353,42 @@ public class AvaliadorExprecoes {
         return null;
     }
 
-    public static int calculadora(Pilha p) {
-        char op = (char) p.pop();
+    public static int calculadora(PilhaSE p, String s) {
         
-        if (getNum(p.get(1)) && getNum(p.get(2))) {
-            return operation(op, p.pop(), p.pop());
-            
-        } else if (getNum(p.get(1)) && getSimbol(p.get(2))) {
-            return operation(op, calculadora(p), getN(p.pop()));
-            
-        } else {
-            return operation(op, calculadora(p), calculadora(p));
+        int arg1, arg2;
+        char c;
+        
+        for (int i=0; i<s.length(); i++) {
+            c = s.charAt(i);
+            if (Character.isDigit(c))
+                p.push(Character.digit(c,10));
+            else if(c=='+') {
+                arg1 = p.top(); p.pop();
+                arg2 = p.top(); p.pop();
+                p.push(arg1+arg2);
+            }
+            else if(c=='*') {
+                arg1 = p.top(); p.pop();
+                arg2 = p.top(); p.pop();
+                p.push(arg1*arg2);
+            }
+            else if(c=='-') {
+                arg1 = p.top(); p.pop();
+                arg2 = p.top(); p.pop();
+                p.push(arg1-arg2);
+            }
+            else if(c=='/') {
+                arg1 = p.top(); p.pop();
+                arg2 = p.top(); p.pop();
+                p.push(arg1/arg2);
+            }
+            else if(c=='^') {
+                arg1 = p.top(); p.pop();
+                arg2 = p.top(); p.pop();
+                p.push((int) Math.pow(arg1,arg2));
+            }
         }
-    }
-    
-    public static int operation(char op, int p, int s) {
-        switch(op) {
-            case '+':
-                return p + s;
-            case '-':
-                return p - s;
-            case '*':
-                return p * s;
-            case '/':
-                if (div0(s)) throw new ArithmeticException("Divisão por zero");
-                return p / s;
-            case '^':
-                return (int) Math.pow(p, s);
-                
-            default:
-                return 0;
-        }
-    }
-    
-    public static boolean div0(int s) {
-        if (s == 0) return true;
-        return false;
-    }
-    
-    public static int getN(char c) {
-        switch(c) {
-            case '0':
-                return 0;
-            case '1':
-                return 1;
-            case '2':
-                return 2;
-            case '3':
-                return 3;
-            case '4':
-                return 4;
-            case '5':
-                return 5;
-            case '6':
-                return 6;
-            case '7':
-                return 7;
-            case '8':
-                return 8;
-            case '9':
-                return 9;
-                
-            default:
-                return 0;
-        }
-    }
+        
+        return p.top();
+    }   
 }
