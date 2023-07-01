@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package avaliadorexprecoes;
 
 public class Pilha {
@@ -18,6 +14,11 @@ public class Pilha {
             res = true;
         }
         return (res);
+    }
+    
+    public char get(int i) {
+        if (isEmpty() && i > 0 && i <= topo) throw new IllegalArgumentException("Uma das entradas está inválida");
+        return vet[topo - i];
     }
 
     public char pop() {

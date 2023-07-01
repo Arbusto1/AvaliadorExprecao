@@ -10,6 +10,7 @@ public class AvaliadorExprecoes {
         char pos;
         String exp;
         Lista<Character> lista = new Lista<>();
+        Pilha p;
 
         while (true) {
             System.out.println("\nDigite 0 para encerrar o programa\nEntre com a expreção: ");
@@ -29,9 +30,11 @@ public class AvaliadorExprecoes {
                 System.out.println("A expreção é inválida.");
                 break;
             }
+            
 
             System.out.println("A expreção infixa: \n" + exp + "\nResulta na expreção pós fixa:");
-           conversao(exp);
+            p = conversao(exp);
+            System.out.println("\nQue tem como resultado: " + calculadora(p));
 
             while (lista.getSize() > 0) {
                 lista.excluir();
@@ -347,9 +350,69 @@ public class AvaliadorExprecoes {
         return null;
     }
 
-    public static int calculadora(char exp) {
-        //essa função retornará o resultado da expressão pósfixa;
-        int resu = 0;
-        return resu;
+    public static int calculadora(Pilha p) {
+        char op = (char) p.pop();
+        
+        if (getNum(p.get(1)) && getNum(p.get(2))) {
+            return operation(op, p.pop(), p.pop());
+            
+        } else if (getNum(p.get(1)) && getSimbol(p.get(2))) {
+            return operation(op, calculadora(p), getN(p.pop()));
+            
+        } else {
+            return operation(op, calculadora(p), calculadora(p));
+        }
+    }
+    
+    public static int operation(char op, int p, int s) {
+        switch(op) {
+            case '+':
+                return p + s;
+            case '-':
+                return p - s;
+            case '*':
+                return p * s;
+            case '/':
+                if (div0(s)) throw new ArithmeticException("Divisão por zero");
+                return p / s;
+            case '^':
+                return (int) Math.pow(p, s);
+                
+            default:
+                return 0;
+        }
+    }
+    
+    public static boolean div0(int s) {
+        if (s == 0) return true;
+        return false;
+    }
+    
+    public static int getN(char c) {
+        switch(c) {
+            case '0':
+                return 0;
+            case '1':
+                return 1;
+            case '2':
+                return 2;
+            case '3':
+                return 3;
+            case '4':
+                return 4;
+            case '5':
+                return 5;
+            case '6':
+                return 6;
+            case '7':
+                return 7;
+            case '8':
+                return 8;
+            case '9':
+                return 9;
+                
+            default:
+                return 0;
+        }
     }
 }
